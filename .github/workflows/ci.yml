@@ -1,5 +1,8 @@
 name: CI Pipeline
 
+env:
+  ACTIONS_STEP_DEBUG: true
+
 on:
   push:
     branches:
@@ -16,7 +19,13 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
             - name: verifica a sintaxe do script
-              run: bash -n status-check.sh
+              run: |
+                if ! bash -n status-check.sh; then
+                echo "::error::Erro de sintaxe no script"
+                exit 1
+                else
+                echo "::notice::Script válido"
+                fi
     
     test:
         name: Run Tests
@@ -40,9 +49,16 @@ jobs:
             - name: Criando o arquivo de relatório
               run: echo "Texto padrão" > report.txt
             - name: Criando report.zip
-              run: zip -r report.zip report.txt
+              run: |
+                zip -r report.zip report.txt
+                echo "::warning::Certifique-se de revisar o conteúdo do relatório."
             - name: Upload Artifact
               uses: actions/upload-artifact@v4
               with:
                 name: application-monitor-report
                 path: report.zip
+            - name: Job Summary
+              run: |
+                echo "### CI Summary" >> $GITHUB_STEP_SUMMARY
+                echo "* Sistema operacional: \`${{ runner.os }}\`" >> $GITHUB_STEP_SUMMARY
+                echo "* Branch: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
