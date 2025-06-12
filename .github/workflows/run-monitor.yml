@@ -1,0 +1,45 @@
+name: Uso de variáveis, secrets e contextos
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  exibir-variavel-ambiente:
+    name: Variável de Ambiente
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Mostrar APP_ENV
+        run: |
+          echo "APP_ENV: $APP_ENV"
+        env:
+          APP_ENV: ${{ vars.APP_ENV }}
+
+  exibir-variavel-contexto:
+    name: Variável de Contexto
+    runs-on: ubuntu-latest
+    needs: exibir-variavel-ambiente
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Mostrar SUPPORT_EMAIL
+        run: |
+          echo "SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}"
+
+  segredo-api-key:
+    name: Usar Segredo
+    runs-on: ubuntu-latest
+    needs: exibir-variavel-contexto
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Usar API_KEY
+        run: |
+          echo "API_KEY: ${{ secrets.API_KEY }}"

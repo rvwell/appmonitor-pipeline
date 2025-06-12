@@ -1,9 +1,17 @@
 # AppMonitor AT - Pipelines de CI/CD e DevOps
 
-## O Papel do Git na Entrega Contínua
+## Etapa 1
+
+### O Papel do Git na Entrega Contínua
 
 O git é fundamental para a entrega continua, pois fornece um histórico completo de todas as mudanças, facilitando o rastreamento, a reversão e a auditoria do código.
 
-## Importância de Branches e Tags
+### Importância de Branches e Tags
 
 Branches e tags fornecem estrutura e controle sobre o que é entregue.
+
+## Etapa 3
+
+### Diferenças entre cada tipo e contexto de variável.
+
+Variáveis de ambiente (env) são locais no workflow, variáveis de repositório (vars) são globais e visíveis, enquanto segredos (secrets) são globais e criptografados para dados sensíveis.
