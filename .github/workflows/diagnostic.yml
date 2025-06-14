@@ -1,0 +1,34 @@
+name: Diagnostico Variaveis e Segredos
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+   check-env:
+    name: Checa variaveis e segredos de ambiente
+    runs-on: ubuntu-latest
+    steps:
+
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Verifica APP_ENV
+          run: |
+            if [ -z "${{ vars.APP_ENV }}" ]; then
+                echo "APP_ENV não está definido." >> $GITHUB_STEP_SUMMARY
+                exit 1
+            else
+                echo "APP_ENV está definido." >> $GITHUB_STEP_SUMMARY
+                exit 0
+        
+        - name: Verifica API_KEY
+          run: |
+            if [ -z "${{ secrets.API_KEY }}" ]; then
+                echo "API_KEY não está definido." >> $GITHUB_STEP_SUMMARY
+                exit 1
+            else
+                echo "API_KEY está definido." >> $GITHUB_STEP_SUMMARY
+                exit 0
