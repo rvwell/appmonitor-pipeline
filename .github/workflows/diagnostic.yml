@@ -23,6 +23,7 @@ jobs:
             else
                 echo "APP_ENV está definido." >> $GITHUB_STEP_SUMMARY
                 exit 0
+                fi
         
         - name: Verifica API_KEY
           run: |
@@ -32,3 +33,4 @@ jobs:
             else
                 echo "API_KEY está definido." >> $GITHUB_STEP_SUMMARY
                 exit 0
+                fi
